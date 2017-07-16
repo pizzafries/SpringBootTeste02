@@ -26,6 +26,11 @@ public class NoticiaController {
 	@Autowired
 	private NoticiaService noticiaService;
 
+	@RequestMapping(path="/", method=RequestMethod.GET)
+    public @ResponseBody List<Noticia> findAll(){
+    	return noticiaService.findAll();
+    }
+	
     @RequestMapping(path="/hello", method=RequestMethod.GET)
     public @ResponseBody String greeting() {
     	String msg = new String("Hello mate");
@@ -48,8 +53,14 @@ public class NoticiaController {
 		return noticiaService.findById(id);
 	}
     
-    @RequestMapping(path="/", method=RequestMethod.GET)
-    public @ResponseBody List<Noticia> findAll(){
-    	return noticiaService.findAll();
+    @RequestMapping(path="/{id}", method = RequestMethod.DELETE)
+    public Map<String,Object> delete(@PathVariable("id") Long id){
+    	Map<String, Object> response = new HashMap<>();
+    	if(noticiaService.delete(id) != null){
+    		response.put("sucess","200");
+    	}else{
+    		response.put("error", "400");
+    	}
+    	return response;
     }
 }

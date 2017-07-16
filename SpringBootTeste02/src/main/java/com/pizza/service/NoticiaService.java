@@ -33,4 +33,10 @@ public class NoticiaService {
 		}
 		return response;
 	}
+	
+	public Noticia delete(Long id){
+		Noticia noticia = noticiaRepository.findOne(id);
+		noticia.setAtivo(false);
+		return noticiaRepository.save(noticia);
+	}
 }
